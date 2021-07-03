@@ -5,6 +5,7 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"net/url"
 
@@ -27,6 +28,7 @@ func New(url, user, apiKey string) *MulticraftAPIClient {
 			SetHostURL(url).
 			SetHeaders(map[string]string{
 				"Content-Type": "application/x-www-form-urlencoded",
+				"Accept":       "application/json",
 			}),
 		user:   user,
 		apiKey: apiKey,
@@ -75,26 +77,38 @@ func (mc *MulticraftAPIClient) Do(method string, params map[string]string) (
 		return nil, err
 	}
 
-	resp := &MulticraftResponse{}
-	errResp := &MulticraftResponse{}
 	restyResp, err := mc.Client.R().
-		SetResult(resp).
-		SetError(errResp).
 		SetBody(content.String()).
 		Post("")
 	if err != nil {
 		return nil, err
 	}
-	if restyResp.IsError() {
-		return errResp, nil
+
+	// Manual conversion needed as the Content-type of the response is marked as
+	// text/html, so resty doesn't correctly unmarrshall the result into the
+	// right structs
+	result := &MulticraftResponse{}
+	if err := json.Unmarshal(restyResp.Body(), result); err != nil {
+		return nil, err
 	}
-	return resp, nil
+	return result, nil
 }
 
 type MulticraftResponse struct {
 	Success bool        `json:"success"`
 	Errors  []string    `json:"errors"`
 	Data    interface{} `json:"data"`
+}
+
+func (mr *MulticraftResponse) IsError() bool {
+	return !mr.Success || len(mr.Errors) > 0
+}
+
+func (mr *MulticraftResponse) Error() string {
+	if len(mr.Errors) > 0 {
+		return mr.Errors[0]
+	}
+	return ""
 }
 
 func addKeyValue(hmacContent, bodyContent *bytes.Buffer, key, value string) error {
