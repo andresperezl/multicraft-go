@@ -92,9 +92,9 @@ func (mc *MulticraftAPIClient) Do(method string, params map[string]string) (
 }
 
 type MulticraftResponse struct {
-	Status bool        `json:"status"`
-	Errors []string    `json:"errors"`
-	Data   interface{} `json:"data"`
+	Success bool        `json:"success"`
+	Errors  []string    `json:"errors"`
+	Data    interface{} `json:"data"`
 }
 
 func addKeyValue(hmacContent, bodyContent *bytes.Buffer, key, value string) error {

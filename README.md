@@ -35,9 +35,9 @@ _Full list of Multicraft API functions can be found [here](https://www.multicraf
 All the responses from the Multicraft API client are in the form:
 ```go
 type MulticraftResponse struct {
-  Status bool        `json:"status"`
-  Errors []string    `json:"errors"`
-  Data   interface{} `json:"data"`
+	Success bool        `json:"success"`
+	Errors  []string    `json:"errors"`
+	Data    interface{} `json:"data"`
 }
 ```
 
