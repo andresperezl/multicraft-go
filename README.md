@@ -1,5 +1,5 @@
-# multicraft-go
-[![Go](https://github.com/andresperezl/multicraft-go/actions/workflows/go.yml/badge.svg)](https://github.com/andresperezl/multicraft-go/actions/workflows/go.yml)[![Coverage Status](https://coveralls.io/repos/github/andresperezl/multicraft-go/badge.svg)](https://coveralls.io/github/andresperezl/multicraft-go)[![Go Reference](https://pkg.go.dev/badge/github.com/andresperezl/multicraft-go.svg)](https://pkg.go.dev/github.com/andresperezl/multicraft-go)
+# multicraft-go [![Go](https://github.com/andresperezl/multicraft-go/actions/workflows/go.yml/badge.svg)](https://github.com/andresperezl/multicraft-go/actions/workflows/go.yml) [![Coverage Status](https://coveralls.io/repos/github/andresperezl/multicraft-go/badge.svg)](https://coveralls.io/github/andresperezl/multicraft-go) [![Go Reference](https://pkg.go.dev/badge/github.com/andresperezl/multicraft-go.svg)](https://pkg.go.dev/github.com/andresperezl/multicraft-go)
+
 
 This is a Multicraft API client implementation in Go.
 
